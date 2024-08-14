@@ -63,4 +63,151 @@ No: 9
 
   // String? name2 = stdin.readLineSync(); //to input String
   // int? name2 = stdin.readByteSync(); //to input int
+
+  int total = 50;
+  int math = 25;
+  int arabic = 25;
+
+  if ((math + arabic) > total) {
+    print("Approved");
+  } else if ((math + arabic) < total) {
+    print("Reject");
+  } else {
+    print("Equal");
+  }
+  print((math + arabic) > total ? "Approved?" : "Equal?");
+
+  print((math + arabic) > total
+      ? "Approved?"
+      : (math + arabic) < total
+          ? "Reject?"
+          : "Equal?");
+
+  if (!((math + arabic) > total)) {
+    //false => true
+    print("Approved");
+  } else if (!((math + arabic) < total)) {
+    print("Reject");
+  } else {
+    print("Equal");
+  }
+
+  bool isChecked = false;
+  print(isChecked);
+  isChecked = !isChecked;
+  print(isChecked);
+
+  int num1 = 1200;
+  int num2 = 1500;
+  int num3 = 150;
+
+  List nums = [num1, num2, num3];
+  int max = nums[0];
+  for (int i = 1; i < nums.length; i++) {
+    if (nums[i] > max) {
+      max = nums[i];
+    }
+  }
+  print("max $max");
+
+  //num1 = 1700;
+  nums[0] = 1700;
+
+  nums.forEach((value) {
+    if (value > max) {
+      max = value;
+    }
+  });
+
+  print("max $max");
+
+  if (num1 > num2 && num1 > num3) {
+    print("Num 1 is greater: i.e $num1");
+  } else if (num2 > num1 && num2 > num3) {
+    print("Num2 is greater: i.e $num2");
+  } else {
+    print("Num3 is greater: i.e $num3");
+  }
+
+  if (num1 > num2 || num1 > num3) {
+    print("Num 1 is greater: i.e $num1");
+  } else if (num2 > num1 || num2 > num3) {
+    print("Num2 is greater: i.e $num2");
+  } else {
+    print("Num3 is greater: i.e $num3");
+  }
+
+  if (num1 > num2 && num1 > num3) {
+    print("Num 1 is greater: i.e $num1");
+  }
+  if (num2 > num1 && num2 > num3) {
+    print("Num2 is greater: i.e $num2");
+  }
+  if (num3 > num1 && num3 > num2) {
+    print("Num3 is greater: i.e $num3");
+  }
+
+  int selection = 2;
+  String output = (selection == 2) ? 'Apple' : 'Banana';
+
+  if (selection == 2) {
+    output = 'Apple';
+  } else {
+    output = 'Banana';
+  }
+  print(output);
+
+  List list = [num1, num2, num3, "s", 10.2];
+  print(list);
+
+  List names = ["Ahmad", "Omar", "Ayman", "Ali", "Owny"];
+
+  print(names[1]);
+  print(names[3]);
+  print(names[names.length - 1]);
+
+  Map map = {
+    'city': 'Amman',
+    'age': 20,
+    'age2': 20,
+    'isMarried': false,
+    'map': {
+      'city': 'Amman',
+      'age': 20,
+      'age2': 20,
+      'isMarried': true,
+    },
+  };
+
+  print(map['city']);
+  print(map['age']);
+
+  int totalAges = map['age'] + map['age2'];
+  print(totalAges);
+  print(map['map']['isMarried']);
+
+  print(calc(y: 20, x: 10));
+  print(double.parse(calc(x: 20).toString()));
+
+  User user = User(id: 50, name: "ALI");
+  user.printData();
+  print(user.name);
+}
+
+//type fName () {}
+
+int calc({required int x, int y = 10}) {
+  return x + y;
+}
+
+class User {
+  int id = 10;
+  String name = "Ahmad";
+
+  User({required this.id, required this.name});
+
+  void printData() {
+    print(id);
+    print(name);
+  }
 }

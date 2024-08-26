@@ -18,14 +18,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// ignore: must_be_immutable
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   MyHomePage();
-  int _counter = 0;
 
-  void _incrementCounter() {
-    _counter++;
-  }
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int counter = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -60,15 +61,268 @@ class MyHomePage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      print("B $counter ");
+                      counter += 1;
+                      print("A $counter ");
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Icon(Icons.add),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    "$counter",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      backgroundColor: Colors.blue,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      counter -= 1;
+                    });
+                  },
+                  icon: Icon(Icons.remove),
+                )
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      print("B $counter ");
+                      counter += 1;
+                      print("A $counter ");
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Icon(Icons.add),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    "$counter",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      backgroundColor: Colors.blue,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      counter -= 1;
+                    });
+                  },
+                  icon: Icon(Icons.remove),
+                )
+              ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      print("B $counter ");
+                      counter += 1;
+                      print("A $counter ");
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Icon(Icons.add),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    "$counter",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      backgroundColor: Colors.blue,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      counter -= 1;
+                    });
+                  },
+                  icon: Icon(Icons.remove),
+                )
+              ],
+            ),
+            Wrap(
+              alignment: WrapAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      print("B $counter ");
+                      counter += 1;
+                      print("A $counter ");
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Icon(Icons.add),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    "$counter",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      backgroundColor: Colors.blue,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      counter -= 1;
+                    });
+                  },
+                  icon: Icon(Icons.remove),
+                ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      print("B $counter ");
+                      counter += 1;
+                      print("A $counter ");
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Icon(Icons.add),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    "$counter",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      backgroundColor: Colors.blue,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      counter -= 1;
+                    });
+                  },
+                  icon: Icon(Icons.remove),
+                ),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      print("B $counter ");
+                      counter += 1;
+                      print("A $counter ");
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Icon(Icons.add),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    "$counter",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      backgroundColor: Colors.blue,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      counter -= 1;
+                    });
+                  },
+                  icon: Icon(Icons.remove),
+                ),
+                ],
+            )
           ],
         ),
       ),

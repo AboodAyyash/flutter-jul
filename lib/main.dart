@@ -30,6 +30,35 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController conName = TextEditingController();
   TextEditingController conPassword = TextEditingController();
   TextEditingController conPhone = TextEditingController();
+
+  List numbers = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,12 +88,11 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             icon: Icon(Icons.wifi),
           ),
-            CircleAvatar(
-              backgroundImage: NetworkImage(
-                "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
-              ),
-              
-            )
+          CircleAvatar(
+            backgroundImage: NetworkImage(
+              "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg",
+            ),
+          )
         ],
       ),
       body: Container(
@@ -75,8 +103,24 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               fit: BoxFit.cover), */
             ),
-        child: Column(
+        child: ListView(
           children: [
+            /*  for (int i = 0; i < numbers.length; i++)
+              Text(numbers[i].toString()),
+            for (var number in numbers) Text(number.toString()), */
+            Container(
+              height: 200,
+              child: ListView.builder(
+                shrinkWrap: true,
+                //physics: NeverScrollableScrollPhysics(),
+                itemCount: numbers.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [customText(numbers[index].toString())],
+                  );
+                },
+              ),
+            ),
             SizedBox(
               height: 10,
             ),
@@ -93,6 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
+            customText("Hello 21"),
             SizedBox(
               height: 10,
             ),
@@ -179,16 +224,149 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 400,
               fit: BoxFit.cover,
             ) */
-            Image.asset(
+            /* Image.asset(
              "assets/images/images.jpeg",
               width: 200,
               height: 400,
               fit: BoxFit.cover,
-            ) 
+            )  */
+
+            Row(
+              children: [
+                InkWell(
+                  child: TextButton(
+                    child: Text("1"),
+                    onPressed: () {
+                      addValue(1);
+                    },
+                  ),
+                ),
+                InkWell(
+                  child: TextButton(
+                    child: Text("2"),
+                    onPressed: () {
+                      addValue(2);
+                    },
+                  ),
+                ),
+                InkWell(
+                  child: TextButton(
+                    child: Text("3"),
+                    onPressed: () {
+                      addValue(3);
+                    },
+                  ),
+                ),
+                InkWell(
+                  child: TextButton(
+                    child: Text("="),
+                    onPressed: () {
+                      addValue("=");
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                InkWell(
+                  child: TextButton(
+                    child: Text("+"),
+                    onPressed: () {
+                      addValue("+");
+                    },
+                  ),
+                ),
+                InkWell(
+                  child: TextButton(
+                    child: Text("-"),
+                    onPressed: () {
+                      addValue("-");
+                    },
+                  ),
+                ),
+                InkWell(
+                  child: TextButton(
+                    child: Text("*"),
+                    onPressed: () {
+                      addValue("*");
+                    },
+                  ),
+                ),
+                InkWell(
+                  child: TextButton(
+                    child: Text("/"),
+                    onPressed: () {
+                      addValue("/");
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              child: Text(
+                  "Num 1 = $num1    ,    Num 2 = $num2    ,   OP = $op    ,    result = $result"),
+            ),
+            Image.asset(
+              "assets/images/images.jpeg",
+              width: 200,
+              height: 400,
+              fit: BoxFit.cover,
+            ),
+            Image.asset(
+              "assets/images/images.jpeg",
+              width: 200,
+              height: 400,
+              fit: BoxFit.cover,
+            ),
           ],
         ),
       ),
-     
+    );
+  }
+
+  addValue(value) {
+    if (value.runtimeType == int) {
+      if (op != "") {
+        num2 += value.toString();
+      } else {
+        num1 += value.toString();
+      }
+    } else {
+      if (value != "=")
+        op = value;
+      else
+        calculate();
+    }
+    setState(() {});
+  }
+
+  calculate() {
+    if (op == '+') {
+      result = convertToDouyble(num1) + convertToDouyble(num2);
+    } else if (op == '-') {
+      result = convertToDouyble(num1) - convertToDouyble(num2);
+    } else if (op == '*') {
+      result = convertToDouyble(num1) * convertToDouyble(num2);
+    } else {
+      result = convertToDouyble(num1) / convertToDouyble(num2);
+    }
+    setState(() {});
+    return result;
+  }
+
+  double convertToDouyble(value) {
+    return double.parse(value.toString());
+  }
+
+  String num1 = "";
+  String num2 = "";
+  String op = "";
+  double result = 0;
+
+  Widget customText(value) {
+    return Container(
+      child: Text("$value"),
     );
   }
 }

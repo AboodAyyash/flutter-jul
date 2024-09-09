@@ -110,6 +110,9 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController conAll = TextEditingController();
 
+  String allValues = "";
+  String value1 = "";
+  String value2 = "";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,32 +124,33 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         children: <Widget>[
           Expanded(
-            flex: 1,
+            flex: 9,
             child: ListView(
               children: [
                 Center(
-                    child: Container(
-                        height: 70,
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: ListView(
-                                children: [
-                                  Image.network(
-                                      "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg"),
-                                ],
-                              ),
+                  child: Container(
+                      height: 70,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ListView(
+                              children: [
+                                Image.network(
+                                    "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg"),
+                              ],
                             ),
-                            Expanded(
-                              child: ListView(
-                                children: [
-                                  Image.network(
-                                      "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg")
-                                ],
-                              ),
-                            )
-                          ],
-                        ))),
+                          ),
+                          Expanded(
+                            child: ListView(
+                              children: [
+                                Image.network(
+                                    "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg")
+                              ],
+                            ),
+                          )
+                        ],
+                      )),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -199,91 +203,78 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                 ),
-                /*    Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      width: 90, // Set the desired width
-                      height: 100, // Set the desired height (optional)
-                      child: TextField(
-                        decoration: InputDecoration(
-                            labelText: "Name",
-                            labelStyle: TextStyle(
-                              color: Color.fromARGB(255, 71, 62, 62),
-                              fontWeight:
-                                  FontWeight.bold, // Makes the text bold
-                              fontSize: 20.0,
-                            ),
-                            border: OutlineInputBorder()),
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: 90, // Set the desired width
+                          height: 100, // Set the desired height (optional)
+                          child: TextField(
+                            decoration: InputDecoration(
+                                labelText: "Name",
+                                labelStyle: TextStyle(
+                                  color: Color.fromARGB(255, 71, 62, 62),
+                                  fontWeight:
+                                      FontWeight.bold, // Makes the text bold
+                                  fontSize: 20.0,
+                                ),
+                                border: OutlineInputBorder()),
+                          ),
+                        ),
+                        Container(
+                          width: 90, // Set the desired width
+                          height: 100, // Set the desired height (optional)
+                          child: TextField(
+                            decoration: InputDecoration(
+                                labelText: "Age",
+                                labelStyle: TextStyle(
+                                  color: Color.fromARGB(255, 71, 62, 62),
+                                  fontWeight:
+                                      FontWeight.bold, // Makes the text bold
+                                  fontSize: 20.0,
+                                ),
+                                border: OutlineInputBorder()),
+                          ),
+                        ),
+                        Container(
+                          width: 90, // Set the desired width
+                          height: 100, // Set the desired height (optional)
+                          child: TextField(
+                            decoration: InputDecoration(
+                                labelText: "Major",
+                                labelStyle: TextStyle(
+                                  color: Color.fromARGB(255, 71, 62, 62),
+                                  fontWeight:
+                                      FontWeight.bold, // Makes the text bold
+                                  fontSize: 20.0,
+                                ),
+                                border: OutlineInputBorder()),
+                          ),
+                        )
+                      ],
                     ),
-                    Container(
-                      width: 90, // Set the desired width
-                      height: 100, // Set the desired height (optional)
-                      child: TextField(
-                        decoration: InputDecoration(
-                            labelText: "Age",
-                            labelStyle: TextStyle(
-                              color: Color.fromARGB(255, 71, 62, 62),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        IconButton(onPressed: () {}, icon: Icon(Icons.add_box)),
+                        Image.network(
+                            "https://t4.ftcdn.net/jpg/04/17/28/93/360_F_417289346_hrs0D4Lo8dSv3aWDqkQpRB0U9PbtFX6n.jpg",
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover),
+                        Text("Done",
+                            style: TextStyle(
                               fontWeight:
                                   FontWeight.bold, // Makes the text bold
                               fontSize: 20.0,
-                            ),
-                            border: OutlineInputBorder()),
-                      ),
-                    ),
-                    Container(
-                      width: 90, // Set the desired width
-                      height: 100, // Set the desired height (optional)
-                      child: TextField(
-                        decoration: InputDecoration(
-                            labelText: "Major",
-                            labelStyle: TextStyle(
-                              color: Color.fromARGB(255, 71, 62, 62),
-                              fontWeight:
-                                  FontWeight.bold, // Makes the text bold
-                              fontSize: 20.0,
-                            ),
-                            border: OutlineInputBorder()),
-                      ),
+                            ))
+                      ],
                     )
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.add_box)),
-                    Image.network(
-                        "https://t4.ftcdn.net/jpg/04/17/28/93/360_F_417289346_hrs0D4Lo8dSv3aWDqkQpRB0U9PbtFX6n.jpg",
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover),
-                    Text("Done",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold, // Makes the text bold
-                          fontSize: 20.0,
-                        ))
-                  ],
-                )
-              ],
-            ),
-           Container(
-              margin: const EdgeInsets.all(10),
-              child: TextField(
-                controller: conAll,
-                decoration:  InputDecoration(
-                  hintText: "${conN1.text.toString}  ${conN2.text.toString}",
-                  labelText: "All",
-                  labelStyle: TextStyle(fontSize: 50),
-                  hintStyle: TextStyle(fontSize: 30),
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ), */
-
                 Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -299,6 +290,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             hintStyle: TextStyle(fontSize: 30),
                             border: OutlineInputBorder(),
                           ),
+                          onChanged: (value) {
+                            allValues += conN1.text.substring(
+                                conN1.text.length - 1, conN1.text.length);
+
+                            setState(() {});
+                          },
                         ),
                       ),
 
@@ -313,13 +310,17 @@ class _MyHomePageState extends State<MyHomePage> {
                             hintStyle: TextStyle(fontSize: 30),
                             border: OutlineInputBorder(),
                           ),
+                          onChanged: (value) {
+                            allValues += conN2.text.substring(
+                                conN2.text.length - 1, conN2.text.length);
+                            setState(() {});
+                          },
                         ),
                       ),
 
                       // ignore: avoid_unnecessary_containers
                       Container(
-                        child: Text(
-                            "${conN1.text.toString}  ${conN2.text.toString}"),
+                        child: Text("$allValues"),
                       ),
                     ],
                   ),

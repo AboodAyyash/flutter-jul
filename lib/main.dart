@@ -33,8 +33,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<double> sizes =
-      List.generate(6, (index) => (20 * pow(2, index)).toDouble());
+  double sizes = 20;
   Color bgColor = Colors.red;
   double height = 100;
   double x = 50;
@@ -125,6 +124,29 @@ class _MyHomePageState extends State<MyHomePage> {
             flex: 1,
             child: ListView(
               children: [
+                Center(
+                    child: Container(
+                        height: 70,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ListView(
+                                children: [
+                                  Image.network(
+                                      "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg"),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: ListView(
+                                children: [
+                                  Image.network(
+                                      "https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg")
+                                ],
+                              ),
+                            )
+                          ],
+                        ))),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
@@ -643,7 +665,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.all(4),
                   child: Wrap(
                     spacing: 10,
-                    children: List.generate(6, (index) {
+                    children: [
+                      for (int i = 0; i < 6; i++)
+                        Container(
+                          width: sizes * (i + 1),
+                          height: sizes * (i + 1),
+                          color: Colors.blueAccent,
+                          child: Image.network(
+                            'https://static.vecteezy.com/vite/assets/photo-masthead-375-BoK_p8LG.webp',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                    ], /*  List.generate(6, (index) {
                       return Container(
                         width: sizes[index],
                         height: sizes[index],
@@ -653,7 +686,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           fit: BoxFit.cover,
                         ),
                       );
-                    }),
+                    }), */
                   ),
                 ),
               ],

@@ -1,50 +1,25 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutterjul/main.dart';
 import 'package:flutterjul/profile.dart';
-import 'package:flutterjul/signup.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Calculator',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrangeAccent),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'My First calculator in flutter'),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class SignupPage extends StatefulWidget {
+  const SignupPage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<SignupPage> createState() => _SignupPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _SignupPageState extends State<SignupPage> {
   final formKey = GlobalKey<FormState>();
   TextEditingController emailCon = TextEditingController();
-
+  TextEditingController nameCon = TextEditingController();
   TextEditingController passwordCon = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text("Signup"),
         centerTitle: true,
       ),
       body: ListView(
@@ -67,6 +42,23 @@ class _MyHomePageState extends State<MyHomePage> {
                         return 'Please enter your email';
                       } else if (!isValidEmail(value)) {
                         return 'Please enter a valid email';
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                    controller: nameCon,
+                    decoration: InputDecoration(
+                      labelText: "User Name",
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your name';
                       } else {
                         return null;
                       }
@@ -118,6 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 builder: (BuildContext context) => ProfilePage(
                                   email: emailCon.text.toString(),
                                   password: passwordCon.text.toString(),
+                                  userName: nameCon.text.toString(),
                                 ),
                               ),
                             );
@@ -125,19 +118,21 @@ class _MyHomePageState extends State<MyHomePage> {
                             print("Not Done!");
                           }
                         },
-                        child: Text("Login"),
+                        child: Text("Signup"),
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push<void>(
+                          /* Navigator.push<void>(
                             context,
                             MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  const SignupPage(),
+                              builder: (BuildContext context) => MyHomePage(
+                                title: 'Login',
+                              ),
                             ),
-                          );
+                          ); */
+                          Navigator.pop(context);
                         },
-                        child: Text("Singup"),
+                        child: Text("Login"),
                       ),
                     ],
                   ),

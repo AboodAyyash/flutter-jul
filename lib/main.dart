@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterjul/pages/login.dart';
-import 'package:flutterjul/pages/profile.dart';
+import 'package:flutterjul/pages/splash.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,9 +17,7 @@ class MyApp extends StatelessWidget {
             ColorScheme.fromSeed(seedColor: Colors.blueAccent.shade700),
         useMaterial3: true,
       ),
-      home: ProfilePage(
-        title: "profile",
-      ),
+      home: SplashPage(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -79,6 +76,15 @@ id   title          desc        isChecked
 3
 4
 5
+
+
+
+name
+nema 
+
+color  ==> green
+type ==> BMW
+doors ==> 4
 
 
 

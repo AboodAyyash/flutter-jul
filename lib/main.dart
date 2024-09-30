@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterjul/pages/splash.dart';
+import 'package:flutterjul/shared/sahred.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
             ColorScheme.fromSeed(seedColor: Colors.blueAccent.shade700),
         useMaterial3: true,
       ),
+      navigatorKey: navigatorKey,
       home: SplashPage(),
       debugShowCheckedModeBanner: false,
     );

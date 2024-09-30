@@ -16,6 +16,6 @@ String replaceNumbers(value) {
 }
 
 String formattedDate(DateTime date) {
-  String formatDate = DateFormat('dd-MM-yyyy').format(date);
+  String formatDate = DateFormat('dd-MM-yyyy hh:mm a').format(date);
   return formatDate;
 }

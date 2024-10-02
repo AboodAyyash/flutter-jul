@@ -4,7 +4,8 @@ import 'package:flutterjul/services/services.dart';
 import 'package:flutterjul/shared/task.dart';
 
 class TaskPage extends StatefulWidget {
-  const TaskPage({super.key});
+  final Task task;
+  const TaskPage({super.key, required this.task});
 
   @override
   State<TaskPage> createState() => _TaskPageState();
@@ -18,57 +19,153 @@ class _TaskPageState extends State<TaskPage> {
   String desc = '';
   String name = '';
   TextEditingController deadLineCon = TextEditingController();
+  TextEditingController nameCon = TextEditingController();
+  TextEditingController descCon = TextEditingController();
+  bool isEditPage = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    setState(() {
+      task = widget.task;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Task Page"),
-        centerTitle: true,
+    return /*  PopScope(
+      canPop: true,
+      onPopInvoked: (value) async {
+        print(value);
+        if (value) Navigator.pop(context, task);
+      }, */
+        WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context, task);
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(task.id == 0
+              ? "Add Task Page"
+              : isEditPage
+                  ? "Edit Task Page"
+                  : "Task Details Page"),
+          centerTitle: true,
+          actions: [
+            if (task.id != 0)
+              !isEditPage
+                  ? IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isEditPage = !isEditPage;
+                          deadLineCon.text = formattedDate(task.deadline);
+                          nameCon.text = task.name;
+                          descCon.text = task.description;
+                        });
+                      },
+                      icon: Icon(
+                        Icons.edit,
+                      ),
+                    )
+                  : IconButton(
+                      onPressed: () {
+                        setState(() {
+                          isEditPage = !isEditPage;
+                          task = Task(
+                              name: nameCon.text.toString(),
+                              id: task.id,
+                              description: descCon.text.toString(),
+                              deadline: deadLine,
+                              createdDate: task.createdDate,
+                              categoryId: task.categoryId,
+                              isChecked: task.isChecked);
+                        });
+                      },
+                      icon: Icon(
+                        Icons.save,
+                      ),
+                    ),
+          ],
+        ),
+        body: task.id != 0 ? taskDetailsWidget() : addTaskWidget(),
       ),
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Name",
-                hintText: "Enter Task Name",
+    );
+  }
+
+  Widget taskDetailsWidget() {
+    return isEditPage
+        ? addTaskWidget()
+        : ListView(
+            children: [
+              ListTile(
+                title: Text("Name"),
+                subtitle: Text(task.name),
               ),
-              onChanged: (value) {
-                name = value;
-              },
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(10),
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Description",
-                hintText: "Enter Task Description",
+              ListTile(
+                title: Text("Description"),
+                subtitle: Text(task.description),
               ),
-              onChanged: (value) {
-                desc = value;
-              },
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(10),
-            child: TextField(
-              readOnly: true,
-              controller: deadLineCon,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Dead Line",
-                hintText: "Enter Task Dead Line",
+              ListTile(
+                title: Text("Creted Date"),
+                subtitle: Text(formattedDate(task.createdDate)),
               ),
-              onTap: () {
-                selectDate();
-              },
+              ListTile(
+                title: Text("DeadLine Date"),
+                subtitle: Text(formattedDate(task.deadline)),
+              ),
+            ],
+          );
+  }
+
+  Widget addTaskWidget() {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.all(10),
+          child: TextField(
+            controller: nameCon,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: "Name",
+              hintText: "Enter Task Name",
             ),
+            onChanged: (value) {
+              name = value;
+            },
           ),
+        ),
+        Container(
+          margin: EdgeInsets.all(10),
+          child: TextField(
+            controller: descCon,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: "Description",
+              hintText: "Enter Task Description",
+            ),
+            onChanged: (value) {
+              desc = value;
+            },
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.all(10),
+          child: TextField(
+            readOnly: true,
+            controller: deadLineCon,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: "Dead Line",
+              hintText: "Enter Task Dead Line",
+            ),
+            onTap: () {
+              selectDate();
+            },
+          ),
+        ),
+        if (!isEditPage)
           TextButton(
             onPressed: () {
               task = Task(
@@ -85,8 +182,7 @@ class _TaskPageState extends State<TaskPage> {
             },
             child: Text("Add Task"),
           ),
-        ],
-      ),
+      ],
     );
   }
 
@@ -99,7 +195,13 @@ class _TaskPageState extends State<TaskPage> {
     ).then((onValue) {
       if (onValue != null) {
         setState(() {
-          deadLine = onValue;
+          deadLine = DateTime(
+            onValue.year,
+            onValue.month,
+            onValue.day,
+            deadLine.hour,
+            deadLine.minute,
+          );
 
           selectTime();
         });

@@ -46,28 +46,43 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Expanded(
                   flex: 9,
-                  child: ListView.builder(
-                    itemCount: filterdTasks.isNotEmpty
-                        ? filterdTasks.length
-                        : tasks.length,
-                    itemBuilder: (context, index) {
-                      return taskCard(
-                        filterdTasks.isNotEmpty
-                            ? filterdTasks[index]
-                            : tasks[index],
-                      );
-                    },
-                  ),
+                  child: tasks.isEmpty
+                      ? const Center(
+                          child: Text("No Tasks Found!"),
+                        )
+                      : ListView.builder(
+                          itemCount: filterdTasks.isNotEmpty
+                              ? filterdTasks.length
+                              : tasks.length,
+                          itemBuilder: (context, index) {
+                            return taskCard(
+                              filterdTasks.isNotEmpty
+                                  ? filterdTasks[index]
+                                  : tasks[index],
+                            );
+                          },
+                        ),
                 ),
               ],
             );
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          Task emptyTask = Task(
+            name: "",
+            id: 0,
+            description: "",
+            deadline: DateTime.now(),
+            createdDate: DateTime.now(),
+            categoryId: 0,
+            isChecked: false,
+          );
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (BuildContext context) => const TaskPage(),
+              builder: (BuildContext context) => TaskPage(
+                task: emptyTask,
+              ),
             ),
           ).then((onValue) {
             if (onValue == 'add task') {
@@ -83,61 +98,90 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget taskCard(Task task) {
-    return Card(
-      color: const Color(0xFF90B4F2),
-      margin: const EdgeInsets.all(16.0),
-      elevation: 4.0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      child: Container(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              task.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 26, 25, 35)),
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => TaskPage(
+              task: task,
             ),
-            const SizedBox(height: 8.0),
-            Row(
-              children: [
-                Text(
-                  "Created: ${formattedDate(task.createdDate)}",
-                  style: const TextStyle(
-                      fontSize: 14.0, color: Color.fromARGB(255, 26, 25, 25)),
-                ),
-                const Spacer(),
-                Text(
-                  "Deadline: ${formattedDate(task.deadline)}",
-                  style: const TextStyle(
-                      fontSize: 14.0, color: Color.fromARGB(255, 26, 25, 35)),
-                ),
-              ],
-            ),
-            const SizedBox(height: 8.0),
-            Text(
-              task.description,
-              style: const TextStyle(fontSize: 14.0),
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 8.0),
-            Checkbox(
-              value: task.isChecked,
-              onChanged: (value) {
-                setState(() {
-                  task.isChecked = value!;
-                });
-              },
-              activeColor: const Color(0xFF6898EE),
-            ),
-          ],
+          ),
+        ).then((newTask) {
+          print(newTask);
+          taskController.updateTaskData(task, newTask);
+        });
+      },
+      child: Card(
+        color: const Color(0xFF90B4F2),
+        margin: const EdgeInsets.all(16.0),
+        elevation: 4.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                task.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 26, 25, 35)),
+              ),
+              const SizedBox(height: 8.0),
+              Row(
+                children: [
+                  Text(
+                    "Created: ${formattedDate(task.createdDate)}",
+                    style: const TextStyle(
+                        fontSize: 14.0, color: Color.fromARGB(255, 26, 25, 25)),
+                  ),
+                  const Spacer(),
+                  Text(
+                    "Deadline: ${formattedDate(task.deadline)}",
+                    style: const TextStyle(
+                        fontSize: 14.0, color: Color.fromARGB(255, 26, 25, 35)),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8.0),
+              Text(
+                task.description,
+                style: const TextStyle(fontSize: 14.0),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 8.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Checkbox(
+                    value: task.isChecked,
+                    onChanged: (value) {
+                      setState(() {
+                        task.isChecked = value!;
+                      });
+                    },
+                    activeColor: const Color(0xFF6898EE),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      taskController.deleteTask(task);
+                    },
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

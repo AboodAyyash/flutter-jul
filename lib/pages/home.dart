@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutterjul/models/category.dart';
 import 'package:flutterjul/models/task.dart';
 import 'package:flutterjul/pages/task.dart';
 import 'package:flutterjul/services/services.dart';
+import 'package:flutterjul/shared/category.dart';
 import 'package:flutterjul/shared/sahred.dart';
 import 'package:flutterjul/shared/task.dart';
 import 'package:flutterjul/widgets/custom-bnb.dart';
@@ -15,6 +17,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Category> allCategories = categories;
+  int selectedCategoryId = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    allCategories.insert(0, Category(id: 0, name: "All"));
+    taskStreamController.sink.add("event");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +40,32 @@ class _HomePageState extends State<HomePage> {
             print(snapshot.data);
             return Column(
               children: [
+                Expanded(
+                  flex: 1,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (int i = 0; i < categories.length; i++)
+                          TextButton(
+                            onPressed: () {
+                              selectedCategoryId = categories[i].id;
+                              taskController
+                                  .getTasksByCategoryId(selectedCategoryId);
+                              taskStreamController.sink.add("event");
+                            },
+                            child: Text(
+                              categories[i].name,
+                              style: TextStyle(
+                                  color: selectedCategoryId == categories[i].id
+                                      ? Colors.red
+                                      : Colors.blue),
+                            ),
+                          )
+                      ],
+                    ),
+                  ),
+                ),
                 Expanded(
                   flex: 1,
                   child: Container(
@@ -51,9 +89,10 @@ class _HomePageState extends State<HomePage> {
                           child: Text("No Tasks Found!"),
                         )
                       : ListView.builder(
-                          itemCount: filterdTasks.isNotEmpty
-                              ? filterdTasks.length
-                              : tasks.length,
+                          itemCount:
+                              filterdTasks.isNotEmpty || selectedCategoryId != 0
+                                  ? filterdTasks.length
+                                  : tasks.length,
                           itemBuilder: (context, index) {
                             return taskCard(
                               filterdTasks.isNotEmpty
@@ -98,7 +137,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget taskCard(Task task) {
-    return InkWell(
+    return /*  selectedCategoryId == task.id || selectedCategoryId == 0
+        ? */
+        InkWell(
       onTap: () {
         Navigator.push(
           context,
@@ -184,70 +225,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-    );
+    ) /*  : Container() */;
   }
 
-/*
-Whatsapp Issue
-  Widget taskCard(Task task) {
-    return Card(
-        child: Container(
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(10),
-                  topLeft: Radius.circular(10)),
-            ),
-            alignment: Alignment.centerLeft,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 9,
-                        child: Text(
-                          task.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontSize: 30),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Checkbox(
-                          value: task.isChecked,
-                          onChanged: (value) {
-                            task.isChecked =
-                                value!; // value = !tasks[index]['isChecked']
-                            setState(() {});
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(task.deadline
-                          .toString()), //be carful to write the string correctly as in string => or you will get an error (you can avoid these errors by """models""")
-                      SizedBox(width: 20),
-                      Text(task.createdDate.toString()),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            /*       Navigator.push(
-                    context,
-                    MaterialPageRoute<void>(
-                        builder: (context) => TaskDetails(task: task))); */
-                          },
-                          icon: Icon(Icons.arrow_right))
-                    ],
-                  )
-                ])));
-  }
-   */
 }

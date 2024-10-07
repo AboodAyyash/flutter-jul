@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterjul/models/category.dart';
+import 'package:flutterjul/shared/category.dart';
 
 class CategoryPage extends StatefulWidget {
   final Category category;
@@ -55,7 +56,8 @@ class _CategoryPageState extends State<CategoryPage> {
                       onPressed: () {
                         setState(() {
                           isEditPage = false;
-                          category = Category(id: category.id, name: nameCon.text);
+                          category =
+                              Category(id: category.id, name: nameCon.text);
                         });
                       },
                       icon: Icon(Icons.save),
@@ -70,13 +72,9 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget categoryDetailsWidget() {
     return isEditPage
         ? addCategoryWidget()
-        : ListView(
-            children: [
-              ListTile(
-                title: Text("Name"),
-                subtitle: Text(category.name),
-              ),
-            ],
+        : ListTile(
+            title: Text("Name"),
+            subtitle: Text(category.name),
           );
   }
 
@@ -101,10 +99,11 @@ class _CategoryPageState extends State<CategoryPage> {
           TextButton(
             onPressed: () {
               category = Category(
-                id: DateTime.now().millisecondsSinceEpoch, // Example of unique ID generation
+                id: DateTime.now().millisecondsSinceEpoch,
                 name: nameCon.text,
               );
-              Navigator.pop(context, category);
+              categories.add(category);
+              Navigator.pop(context, "add category");
             },
             child: Text("Add Category"),
           ),

@@ -27,6 +27,19 @@ void search(value) {
   taskStreamController.sink.add("update Task");
 }
 
+getTasksByCategoryId(categryId) {
+  if (categryId == 0)
+    filterdTasks = tasks;
+  else {
+    filterdTasks = tasks
+        .where((element) =>
+            element.categoryId.toString().contains(categryId.toString()))
+        .toList();
+  }
+  print(filterdTasks);
+  taskStreamController.sink.add("update Task");
+}
+
 void updateTaskData(Task oldTask, Task newTask) {
   int index = tasks.indexOf(oldTask);
   tasks.removeAt(index);

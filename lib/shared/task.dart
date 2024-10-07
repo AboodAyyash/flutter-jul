@@ -11,7 +11,7 @@ List tasks = [
     name: "Task 1 Task 1 Task 1 Task 1 Task 1Task 1Task 1Task 1Task 1",
   ),
   Task(
-    categoryId: 1,
+    categoryId: 2,
     createdDate: DateTime.now(),
     deadline: DateTime.now(),
     description: "Description",

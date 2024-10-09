@@ -8,6 +8,8 @@ import 'package:flutterjul/shared/sahred.dart';
 import 'package:flutterjul/shared/task.dart';
 import 'package:flutterjul/widgets/custom-bnb.dart';
 import 'package:flutterjul/controllers/task.dart' as taskController;
+import 'package:flutterjul/widgets/custom-dialog.dart';
+import 'package:flutterjul/widgets/task-card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,7 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Category> allCategories = categories;
+  List<Category> allCategories = List.from(categories);
   int selectedCategoryId = 0;
   @override
   void initState() {
@@ -46,20 +48,21 @@ class _HomePageState extends State<HomePage> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        for (int i = 0; i < categories.length; i++)
+                        for (int i = 0; i < allCategories.length; i++)
                           TextButton(
                             onPressed: () {
-                              selectedCategoryId = categories[i].id;
+                              selectedCategoryId = allCategories[i].id;
                               taskController
                                   .getTasksByCategoryId(selectedCategoryId);
                               taskStreamController.sink.add("event");
                             },
                             child: Text(
-                              categories[i].name,
+                              allCategories[i].name,
                               style: TextStyle(
-                                  color: selectedCategoryId == categories[i].id
-                                      ? Colors.red
-                                      : Colors.blue),
+                                  color:
+                                      selectedCategoryId == allCategories[i].id
+                                          ? Colors.red
+                                          : Colors.blue),
                             ),
                           )
                       ],
@@ -97,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                             return taskCard(
                               filterdTasks.isNotEmpty
                                   ? filterdTasks[index]
-                                  : tasks[index],
+                                  : tasks[index],"Home"
                             );
                           },
                         ),
@@ -135,97 +138,4 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: customBNB(),
     );
   }
-
-  Widget taskCard(Task task) {
-    return /*  selectedCategoryId == task.id || selectedCategoryId == 0
-        ? */
-        InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => TaskPage(
-              task: task,
-            ),
-          ),
-        ).then((newTask) {
-          print(newTask);
-          taskController.updateTaskData(task, newTask);
-        });
-      },
-      child: Card(
-        color: const Color(0xFF90B4F2),
-        margin: const EdgeInsets.all(16.0),
-        elevation: 4.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-        ),
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                task.name,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 26, 25, 35)),
-              ),
-              const SizedBox(height: 8.0),
-              Row(
-                children: [
-                  Text(
-                    "Created: ${formattedDate(task.createdDate)}",
-                    style: const TextStyle(
-                        fontSize: 14.0, color: Color.fromARGB(255, 26, 25, 25)),
-                  ),
-                  const Spacer(),
-                  Text(
-                    "Deadline: ${formattedDate(task.deadline)}",
-                    style: const TextStyle(
-                        fontSize: 14.0, color: Color.fromARGB(255, 26, 25, 35)),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8.0),
-              Text(
-                task.description,
-                style: const TextStyle(fontSize: 14.0),
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 8.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Checkbox(
-                    value: task.isChecked,
-                    onChanged: (value) {
-                      setState(() {
-                        task.isChecked = value!;
-                      });
-                    },
-                    activeColor: const Color(0xFF6898EE),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      taskController.deleteTask(task);
-                    },
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    ) /*  : Container() */;
-  }
-
 }

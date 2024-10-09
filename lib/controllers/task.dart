@@ -53,3 +53,12 @@ void deleteTask(Task task) {
 
   taskStreamController.sink.add("update Task");
 }
+
+void completeTask(Task task) {
+  int index = tasks.indexOf(task);
+  tasks.removeAt(index);
+  print(task.name);
+  completedTasks.add(task);
+
+  taskStreamController.sink.add("update Task");
+}

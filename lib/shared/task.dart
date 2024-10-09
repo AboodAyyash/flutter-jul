@@ -21,4 +21,5 @@ List tasks = [
   ),
 ];
 List filterdTasks = [];
+List completedTasks = [];
 bool showSnakBar = false;

@@ -18,7 +18,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    categories.removeAt(0);
+   // categories.removeAt(0);
   }
 
   @override

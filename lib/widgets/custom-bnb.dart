@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutterjul/pages/categories.dart';
+import 'package:flutterjul/pages/completed-tasks.dart';
 import 'package:flutterjul/pages/home.dart';
+import 'package:flutterjul/pages/profile.dart';
 import 'package:flutterjul/shared/sahred.dart';
 
 Widget customBNB() {
@@ -37,13 +39,27 @@ Widget customBNB() {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacement<void, void>(
+              navigatorKey.currentState!.context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => const CompletedTasksPage(),
+              ),
+            );
+          },
           icon: Icon(
             Icons.close,
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacement<void, void>(
+              navigatorKey.currentState!.context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => ProfilePage(),
+              ),
+            );
+          },
           icon: Icon(
             Icons.person,
           ),

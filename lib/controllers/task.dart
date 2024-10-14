@@ -4,7 +4,7 @@ import 'package:flutterjul/shared/sahred.dart';
 import 'package:flutterjul/shared/task.dart';
 
 void search(value) {
-  filterdTasks = tasks
+  filterdTasks = userTasks
       .where((element) => element.name
           .toString()
           .toLowerCase()
@@ -29,9 +29,9 @@ void search(value) {
 
 getTasksByCategoryId(categryId) {
   if (categryId == 0)
-    filterdTasks = tasks;
+    filterdTasks = userTasks;
   else {
-    filterdTasks = tasks
+    filterdTasks = userTasks
         .where((element) =>
             element.categoryId.toString().contains(categryId.toString()))
         .toList();
@@ -44,13 +44,14 @@ void updateTaskData(Task oldTask, Task newTask) {
   int index = tasks.indexOf(oldTask);
   tasks.removeAt(index);
   tasks.insert(index, newTask);
+  getTasks();
   taskStreamController.sink.add("update Task");
 }
 
 void deleteTask(Task task) {
   int index = tasks.indexOf(task);
   tasks.removeAt(index);
-
+  getTasks();
   taskStreamController.sink.add("update Task");
 }
 
@@ -59,6 +60,16 @@ void completeTask(Task task) {
   tasks.removeAt(index);
   print(task.name);
   completedTasks.add(task);
+  getTasks();
+  taskStreamController.sink.add("update Task");
+}
 
+getTasks() {
+  userTasks = [];
+  for (var i = 0; i < tasks.length; i++) {
+    if (tasks[i].userId == user.id) {
+      userTasks.add(tasks[i]);
+    }
+  }
   taskStreamController.sink.add("update Task");
 }

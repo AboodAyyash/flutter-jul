@@ -6,6 +6,7 @@ class Task {
   DateTime createdDate;
   int categoryId;
   bool isChecked;
+  int userId;
 
   Task({
     required this.name,
@@ -15,5 +16,6 @@ class Task {
     required this.createdDate,
     required this.categoryId,
     required this.isChecked,
+    required this.userId,
   });
 }

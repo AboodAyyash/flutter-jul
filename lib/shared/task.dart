@@ -1,4 +1,5 @@
 import 'package:flutterjul/models/task.dart';
+import 'package:flutterjul/shared/sahred.dart';
 
 List tasks = [
   Task(
@@ -9,6 +10,7 @@ List tasks = [
     id: 1,
     isChecked: false,
     name: "Task 1 Task 1 Task 1 Task 1 Task 1Task 1Task 1Task 1Task 1",
+    userId: 1,
   ),
   Task(
     categoryId: 2,
@@ -18,8 +20,10 @@ List tasks = [
     id: 2,
     isChecked: false,
     name: "Task 2",
+    userId: 2,
   ),
 ];
+List userTasks = [];
 List filterdTasks = [];
 List completedTasks = [];
 bool showSnakBar = false;

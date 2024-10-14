@@ -18,7 +18,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-   // categories.removeAt(0);
+    // categories.removeAt(0);
+    categoryContrller.getCategories();
   }
 
   @override
@@ -32,22 +33,22 @@ class _CategoriesPageState extends State<CategoriesPage> {
           stream: categoryStreamController.stream,
           builder: (context, snapshot) {
             return ListView.builder(
-              itemCount: categories.length,
+              itemCount: userCategories.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(categories[index].name),
-                  subtitle: Text(categories[index].id.toString()),
+                  title: Text(userCategories[index].name),
+                  subtitle: Text(userCategories[index].id.toString()),
                   onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (BuildContext context) => CategoryPage(
-                          category: categories[index],
+                          category: userCategories[index],
                         ),
                       ),
                     ).then((newCategory) {
                       categoryContrller.updateCategoryData(
-                          categories[index], newCategory);
+                          userCategories[index], newCategory);
                     });
                   },
                 );
@@ -59,6 +60,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
           Category emptyCategory = Category(
             name: "",
             id: 0,
+            userId: user.id,
           );
           Navigator.push(
             context,

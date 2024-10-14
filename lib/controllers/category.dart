@@ -4,17 +4,29 @@ import 'package:flutterjul/shared/category.dart';
 
 import 'package:flutterjul/shared/sahred.dart';
 
-
 void updateCategoryData(Category oldCategory, Category newCategory) {
   int index = categories.indexOf(oldCategory);
   categories.removeAt(index);
   categories.insert(index, newCategory);
+  getCategories();
   categoryStreamController.sink.add("update Category");
 }
 
-void deleteTask(Category task) {
-  int index = categories.indexOf(task);
+void deleteCategory(Category category) {
+  int index = categories.indexOf(category);
   categories.removeAt(index);
+  getCategories();
+  categoryStreamController.sink.add("update Category");
+}
 
+getCategories() {
+  userCategories = [];
+  allCategories = [];
+  for (var i = 0; i < categories.length; i++) {
+    if (categories[i].userId == user.id) {
+      userCategories.add(categories[i]);
+      allCategories.add(categories[i]);
+    }
+  }
   categoryStreamController.sink.add("update Category");
 }

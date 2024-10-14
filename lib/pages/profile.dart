@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterjul/shared/sahred.dart';
 import 'package:flutterjul/widgets/custom-bnb.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -14,15 +15,7 @@ class ProfilePage extends StatelessWidget {
           "Profile Page",
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        elevation: 100,
         centerTitle: true,
-        actions: const [
-          Padding(
-              padding: EdgeInsets.only(right: 50),
-              child: Icon(
-                Icons.account_circle,
-              )),
-        ],
       ),
       body: Center(
         child: Container(
@@ -30,7 +23,28 @@ class ProfilePage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: ListView(
-              children: [],
+              children: [
+                ListTile(
+                  title: Text("Name"),
+                  subtitle: Text(user.name),
+                ),
+                ListTile(
+                  title: Text("Email"),
+                  subtitle: Text(user.email),
+                ),
+                ListTile(
+                  title: Text("Password"),
+                  subtitle: Text(user.password),
+                ),
+                ListTile(
+                  title: Text("Age"),
+                  subtitle: Text(user.age),
+                ),
+                ListTile(
+                  title: Text("ID"),
+                  subtitle: Text(user.id.toString()),
+                ),
+              ],
             ),
           ),
         ),

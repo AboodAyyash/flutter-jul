@@ -10,6 +10,7 @@ import 'package:flutterjul/widgets/custom-bnb.dart';
 import 'package:flutterjul/controllers/task.dart' as taskController;
 import 'package:flutterjul/widgets/custom-dialog.dart';
 import 'package:flutterjul/widgets/task-card.dart';
+import 'package:flutterjul/controllers/category.dart' as categoryContrller;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,13 +20,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Category> allCategories = List.from(categories);
   int selectedCategoryId = 0;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    allCategories.insert(0, Category(id: 0, name: "All"));
+    taskController.getTasks();
+    categoryContrller.getCategories();
+    allCategories.insert(
+        0,
+        Category(
+          id: 0,
+          name: "All",
+          userId: user.id,
+        ));
     taskStreamController.sink.add("event");
   }
 
@@ -95,13 +103,13 @@ class _HomePageState extends State<HomePage> {
                           itemCount:
                               filterdTasks.isNotEmpty || selectedCategoryId != 0
                                   ? filterdTasks.length
-                                  : tasks.length,
+                                  : userTasks.length,
                           itemBuilder: (context, index) {
                             return taskCard(
-                              filterdTasks.isNotEmpty
-                                  ? filterdTasks[index]
-                                  : tasks[index],"Home"
-                            );
+                                filterdTasks.isNotEmpty
+                                    ? filterdTasks[index]
+                                    : userTasks[index],
+                                "Home");
                           },
                         ),
                 ),
@@ -114,6 +122,7 @@ class _HomePageState extends State<HomePage> {
             name: "",
             id: 0,
             description: "",
+            userId: user.id,
             deadline: DateTime.now(),
             createdDate: DateTime.now(),
             categoryId: 0,

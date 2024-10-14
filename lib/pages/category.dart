@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterjul/models/category.dart';
 import 'package:flutterjul/shared/category.dart';
+import 'package:flutterjul/shared/sahred.dart';
 
 class CategoryPage extends StatefulWidget {
   final Category category;
@@ -56,8 +57,11 @@ class _CategoryPageState extends State<CategoryPage> {
                       onPressed: () {
                         setState(() {
                           isEditPage = false;
-                          category =
-                              Category(id: category.id, name: nameCon.text);
+                          category = Category(
+                            id: category.id,
+                            name: nameCon.text,
+                            userId: user.id,
+                          );
                         });
                       },
                       icon: Icon(Icons.save),
@@ -101,6 +105,7 @@ class _CategoryPageState extends State<CategoryPage> {
               category = Category(
                 id: DateTime.now().millisecondsSinceEpoch,
                 name: nameCon.text,
+                userId: user.id,
               );
               categories.add(category);
               Navigator.pop(context, "add category");

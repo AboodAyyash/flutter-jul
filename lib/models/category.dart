@@ -3,6 +3,6 @@
 class Category {
   String name;
   int id;
-
-  Category({required this.id, required this.name});
+  int userId;
+  Category({required this.id, required this.name, required this.userId});
 }

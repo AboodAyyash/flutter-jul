@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutterjul/models/task.dart';
 import 'package:flutterjul/services/services.dart';
+import 'package:flutterjul/shared/sahred.dart';
 import 'package:flutterjul/shared/task.dart';
 
 class TaskPage extends StatefulWidget {
@@ -74,6 +75,7 @@ class _TaskPageState extends State<TaskPage> {
                         setState(() {
                           isEditPage = !isEditPage;
                           task = Task(
+                              userId: user.id,
                               name: nameCon.text.toString(),
                               id: task.id,
                               description: descCon.text.toString(),
@@ -170,6 +172,7 @@ class _TaskPageState extends State<TaskPage> {
             onPressed: () {
               task = Task(
                 categoryId: 1,
+                userId: user.id,
                 createdDate: DateTime.now(),
                 deadline: deadLine,
                 description: desc,

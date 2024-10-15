@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutterjul/models/user.dart';
+import 'package:flutterjul/pages/splash.dart';
 import 'package:flutterjul/shared/sahred.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,6 +30,17 @@ signup(UserModel newUser) {
 saveUserId() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setInt("userId", user.id);
+}
+
+logout() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setInt("userId", 0);
+  Navigator.pushReplacement<void, void>(
+    navigatorKey.currentState!.context,
+    MaterialPageRoute<void>(
+      builder: (BuildContext context) => const SplashPage(),
+    ),
+  );
 }
 
 getUserDataById(id) {

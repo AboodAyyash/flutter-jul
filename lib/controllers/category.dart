@@ -12,13 +12,6 @@ void updateCategoryData(Category oldCategory, Category newCategory) {
   categoryStreamController.sink.add("update Category");
 }
 
-void deleteCategory(Category category) {
-  int index = categories.indexOf(category);
-  categories.removeAt(index);
-  getCategories();
-  categoryStreamController.sink.add("update Category");
-}
-
 getCategories() {
   userCategories = [];
   allCategories = [];

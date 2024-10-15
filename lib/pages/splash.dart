@@ -25,7 +25,7 @@ class _SplashPageState extends State<SplashPage> {
 
   checkUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getInt("userId") != null) {
+    if (prefs.getInt("userId") != null && prefs.getInt("userId") != 0) {
       getUserDataById(prefs.getInt("userId"));
       Navigator.pushReplacement<void, void>(
         context,

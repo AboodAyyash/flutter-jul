@@ -22,6 +22,9 @@ class _CategoryPageState extends State<CategoryPage> {
     super.initState();
     setState(() {
       category = widget.category;
+      print(category.name);
+      print(category.toMap()['name']);
+
       nameCon.text = category.name;
     });
   }

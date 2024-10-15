@@ -47,16 +47,21 @@ Widget taskCard(Task task, fromWhere) {
             const SizedBox(height: 8.0),
             Row(
               children: [
-                Text(
-                  "Created: ${formattedDate(task.createdDate)}",
-                  style: const TextStyle(
-                      fontSize: 14.0, color: Color.fromARGB(255, 26, 25, 25)),
+                Expanded(
+                  child: Text(
+                    "Created: ${formattedDate(task.createdDate)}",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 14.0, color: Color.fromARGB(255, 26, 25, 25)),
+                  ),
                 ),
-                const Spacer(),
-                Text(
-                  "Deadline: ${formattedDate(task.deadline)}",
-                  style: const TextStyle(
-                      fontSize: 14.0, color: Color.fromARGB(255, 26, 25, 35)),
+                Expanded(
+                  child: Text(
+                    "Deadline: ${formattedDate(task.deadline)}",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 14.0, color: Color.fromARGB(255, 26, 25, 35)),
+                  ),
                 ),
               ],
             ),

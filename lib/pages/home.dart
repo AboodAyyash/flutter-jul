@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterjul/DB/category.dart';
 import 'package:flutterjul/models/category.dart';
 import 'package:flutterjul/models/task.dart';
 import 'package:flutterjul/pages/task.dart';
@@ -21,11 +22,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedCategoryId = 0;
+  CategoryDatabase categoryDatabase = CategoryDatabase.instance;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     taskController.getTasks();
+
     categoryContrller.getCategories();
     allCategories.insert(
         0,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterjul/controllers/user.dart';
 import 'package:flutterjul/shared/sahred.dart';
 import 'package:flutterjul/widgets/custom-bnb.dart';
 
@@ -48,6 +49,12 @@ class ProfilePage extends StatelessWidget {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          logout();
+        },
+        child: Icon(Icons.logout),
       ),
       bottomNavigationBar: customBNB(),
     );

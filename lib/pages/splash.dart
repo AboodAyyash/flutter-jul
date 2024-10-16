@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutterjul/DB/user.dart';
 import 'package:flutterjul/controllers/user.dart';
 import 'package:flutterjul/pages/home.dart';
 import 'package:flutterjul/pages/login.dart';
+import 'package:flutterjul/shared/sahred.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
@@ -18,6 +20,11 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    start();
+  }
+
+  void start() async {
+    await getAllUsersFromDB();
     Timer(Duration(seconds: 1), () {
       checkUser();
     });

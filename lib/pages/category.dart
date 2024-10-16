@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutterjul/DB/category.dart';
+import 'package:flutterjul/controllers/category.dart';
 import 'package:flutterjul/models/category.dart';
 import 'package:flutterjul/shared/category.dart';
 import 'package:flutterjul/shared/sahred.dart';
@@ -105,13 +107,7 @@ class _CategoryPageState extends State<CategoryPage> {
         if (!isEditPage)
           TextButton(
             onPressed: () {
-              category = Category(
-                id: DateTime.now().millisecondsSinceEpoch,
-                name: nameCon.text,
-                userId: user.id,
-              );
-              categories.add(category);
-              Navigator.pop(context, "add category");
+              addCategory(nameCon.text);
             },
             child: Text("Add Category"),
           ),

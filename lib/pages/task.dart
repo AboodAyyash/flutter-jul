@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutterjul/models/category.dart';
 import 'package:flutterjul/models/task.dart';
 import 'package:flutterjul/services/services.dart';
+import 'package:flutterjul/shared/category.dart';
 import 'package:flutterjul/shared/sahred.dart';
 import 'package:flutterjul/shared/task.dart';
 
@@ -23,6 +25,7 @@ class _TaskPageState extends State<TaskPage> {
   TextEditingController nameCon = TextEditingController();
   TextEditingController descCon = TextEditingController();
   bool isEditPage = false;
+  Category selectedCategory = categories[0];
   @override
   void initState() {
     // TODO: implement initState
@@ -167,11 +170,26 @@ class _TaskPageState extends State<TaskPage> {
             },
           ),
         ),
+        DropdownButton<Category>(
+          items: categories.map((Category category) {
+            return DropdownMenuItem(
+              child: Text(category.name),
+              value: category,
+            );
+          }).toList(),
+          onChanged: (value) {
+            setState(() {
+              print(value);
+              selectedCategory = value!;
+            });
+          },
+          value: selectedCategory,
+        ),
         if (!isEditPage)
           TextButton(
             onPressed: () {
               task = Task(
-                categoryId: 1,
+                categoryId: selectedCategory.id,
                 userId: user.id,
                 createdDate: DateTime.now(),
                 deadline: deadLine,

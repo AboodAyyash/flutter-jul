@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutterjul/DB/user.dart';
 import 'package:flutterjul/models/user.dart';
 import 'package:flutterjul/pages/splash.dart';
 import 'package:flutterjul/shared/sahred.dart';
@@ -24,7 +25,16 @@ String checkLogin(email, password) {
 }
 
 signup(UserModel newUser) {
-  users.add(newUser);
+  UserDatabase userDatabase = UserDatabase.instance;
+  userDatabase.create(newUser);
+  getAllUsersFromDB();
+}
+
+getAllUsersFromDB() async {
+  UserDatabase userDatabase = UserDatabase.instance;
+  await userDatabase.getAllUsers().then((onValue) {
+    users = onValue;
+  });
 }
 
 saveUserId() async {

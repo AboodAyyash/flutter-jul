@@ -1,4 +1,5 @@
 import 'package:flutterjul/models/category.dart';
+import 'package:flutterjul/shared/sahred.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -9,7 +10,7 @@ class CategoryFields {
     userId,
   ];
 
-  static final String id = '_id';
+  static final String id = 'id';
   static final String name = 'name';
   static final String userId = 'userId';
 }
@@ -26,7 +27,7 @@ class CategoryDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('category.db');
+    _database = await _initDB('categories.db');
     return _database!;
   }
 
@@ -38,10 +39,6 @@ class CategoryDatabase {
   }
 
   Future _createDB(Database db, int version) async {
-    const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
-    const textType = 'TEXT NOT NULL';
-    const integerType = 'INTEGER NOT NULL';
-
     await db.execute('''
 CREATE TABLE $tableCategories ( 
   ${CategoryFields.id} $idType, 
@@ -54,9 +51,9 @@ CREATE TABLE $tableCategories (
   Future<int> create(Category category) async {
     final db = await instance.database;
 
-    await db.rawInsert(
+/*     await db.rawInsert(
         'INSERT INTO $tableCategories(${CategoryFields.name}, ${CategoryFields.userId}) VALUES(?, ?)',
-        [category.name, category.userId]);
+        [category.name, category.userId]); */
 
     final result = db.insert(tableCategories, category.toMap());
 
@@ -72,5 +69,13 @@ CREATE TABLE $tableCategories (
       where: '${CategoryFields.id} = ?',
       whereArgs: [category.id],
     );
+  }
+
+  Future<List<Category>> getAllCategories() async {
+    final db = await instance.database;
+
+    final results = await db.query(tableCategories);
+    print(results);
+    return results.map((json) => Category.fromMap(json)).toList();
   }
 }

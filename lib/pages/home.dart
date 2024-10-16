@@ -27,9 +27,13 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    taskController.getTasks();
 
-    categoryContrller.getCategories();
+    getData();
+  }
+
+  getData() async {
+    taskController.getTasks();
+    await categoryContrller.getCategories();
     allCategories.insert(
         0,
         Category(
@@ -37,6 +41,8 @@ class _HomePageState extends State<HomePage> {
           name: "All",
           userId: user.id,
         ));
+    taskStreamController.sink.add("event");
+
     taskStreamController.sink.add("event");
   }
 

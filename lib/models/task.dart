@@ -16,6 +16,32 @@ class Task {
     required this.createdDate,
     required this.categoryId,
     required this.isChecked,
-    required this.userId,
+    required this.userId
   });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'userId': userId,
+      'categoryId': categoryId,
+      'isChecked': isChecked,
+      'createdDate': createdDate,
+      'deadline': deadline,
+      'description': description
+    };
+  }
+
+  factory Task.fromMap(Map<String, dynamic> map) {
+    return Task(
+      id: map['id'],
+      name: map['name'],
+      userId: map['userId'],
+      deadline: map['deadline'],
+      createdDate: map['createdDate'],
+      description: map['description'],
+      isChecked: map['isChecked'],
+      categoryId: map['categoryId'],
+    );
+  }
 }

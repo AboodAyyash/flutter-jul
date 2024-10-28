@@ -1,9 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutterjul/DB/user.dart';
 import 'package:flutterjul/models/user.dart';
 import 'package:flutterjul/pages/splash.dart';
-import 'package:flutterjul/shared/sahred.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutterjul/shared/shared.dart';
 
 String checkLogin(email, password) {
   // String check = '';

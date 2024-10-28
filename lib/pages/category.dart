@@ -1,9 +1,9 @@
+// ignore_for_file: prefer_const_constructors, avoid_print, deprecated_member_use
+
 import 'package:flutter/material.dart';
-import 'package:flutterjul/DB/category.dart';
 import 'package:flutterjul/controllers/category.dart';
 import 'package:flutterjul/models/category.dart';
-import 'package:flutterjul/shared/category.dart';
-import 'package:flutterjul/shared/sahred.dart';
+import 'package:flutterjul/shared/shared.dart';
 
 class CategoryPage extends StatefulWidget {
   final Category category;

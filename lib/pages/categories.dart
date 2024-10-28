@@ -1,8 +1,10 @@
+// ignore_for_file: avoid_print, prefer_const_constructors, library_prefixes
+
 import 'package:flutter/material.dart';
 import 'package:flutterjul/models/category.dart';
 import 'package:flutterjul/pages/category.dart';
 import 'package:flutterjul/shared/category.dart';
-import 'package:flutterjul/shared/sahred.dart';
+import 'package:flutterjul/shared/shared.dart';
 import 'package:flutterjul/widgets/custom-bnb.dart';
 import 'package:flutterjul/controllers/category.dart' as categoryContrller;
 
@@ -16,9 +18,7 @@ class CategoriesPage extends StatefulWidget {
 class _CategoriesPageState extends State<CategoriesPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // categories.removeAt(0);
     categoryContrller.getCategories();
   }
 

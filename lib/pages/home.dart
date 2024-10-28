@@ -1,17 +1,19 @@
+// ignore_for_file: avoid_print, depend_on_referenced_packages, library_prefixes
+
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutterjul/DB/category.dart';
+import 'package:flutterjul/DB/category.dart' as categoryDB;
+import 'package:flutterjul/DB/task.dart' as taskDB;
+import 'package:flutterjul/controllers/task.dart';
 import 'package:flutterjul/models/category.dart';
 import 'package:flutterjul/models/task.dart';
 import 'package:flutterjul/pages/task.dart';
-import 'package:flutterjul/services/services.dart';
 import 'package:flutterjul/shared/category.dart';
-import 'package:flutterjul/shared/sahred.dart';
+import 'package:flutterjul/shared/shared.dart';
 import 'package:flutterjul/shared/task.dart';
 import 'package:flutterjul/widgets/custom-bnb.dart';
-import 'package:flutterjul/controllers/task.dart' as taskController;
-import 'package:flutterjul/widgets/custom-dialog.dart';
 import 'package:flutterjul/widgets/task-card.dart';
-import 'package:flutterjul/controllers/category.dart' as categoryContrller;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,109 +24,107 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedCategoryId = 0;
-  CategoryDatabase categoryDatabase = CategoryDatabase.instance;
+
+  final taskStreamController = StreamController<String>();
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
-    getData();
+    _getData();
   }
 
-  getData() async {
-    taskController.getTasks();
-    await categoryContrller.getCategories();
+  Future<void> _getData() async {
+    allCategories =
+        await categoryDB.CategoryDatabase.instance.getAllCategories();
+    categories = await categoryDB.CategoryDatabase.instance.getAllCategories();
     allCategories.insert(
-        0,
-        Category(
-          id: 0,
-          name: "All",
-          userId: user.id,
-        ));
-    taskStreamController.sink.add("event");
+      0,
+      Category(id: 0, name: "All", userId: user.id),
+    );
 
-    taskStreamController.sink.add("event");
+    await getTasks().then((onValue) {
+      taskStreamController.sink.add("event");
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Tasks App"),
+        title: const Text("Tasks App"),
         centerTitle: true,
       ),
-      body: StreamBuilder(
-          stream: taskStreamController.stream,
-          builder: (context, snapshot) {
-            print(snapshot.data);
-            return Column(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: [
-                        for (int i = 0; i < allCategories.length; i++)
-                          TextButton(
-                            onPressed: () {
-                              selectedCategoryId = allCategories[i].id;
-                              taskController
-                                  .getTasksByCategoryId(selectedCategoryId);
-                              taskStreamController.sink.add("event");
-                            },
-                            child: Text(
-                              allCategories[i].name,
-                              style: TextStyle(
-                                  color:
-                                      selectedCategoryId == allCategories[i].id
-                                          ? Colors.red
-                                          : Colors.blue),
-                            ),
-                          )
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    margin: EdgeInsets.all(10),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Search",
-                        hintText: "Enter Task Name",
-                      ),
-                      onChanged: (value) {
-                        taskController.search(value);
-                      },
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: 9,
-                  child: tasks.isEmpty
-                      ? const Center(
-                          child: Text("No Tasks Found!"),
-                        )
-                      : ListView.builder(
-                          itemCount:
-                              filterdTasks.isNotEmpty || selectedCategoryId != 0
-                                  ? filterdTasks.length
-                                  : userTasks.length,
-                          itemBuilder: (context, index) {
-                            return taskCard(
-                                filterdTasks.isNotEmpty
-                                    ? filterdTasks[index]
-                                    : userTasks[index],
-                                "Home");
+      body: StreamBuilder<String>(
+        stream: taskStreamController.stream,
+        builder: (context, snapshot) {
+          return Column(
+            children: [
+              Expanded(
+                flex: 1,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (int i = 0; i < allCategories.length; i++)
+                        TextButton(
+                          onPressed: () {
+                            selectedCategoryId = allCategories[i].id;
+                            filteredTasks;
+                            taskStreamController.sink.add("event");
                           },
+                          child: Text(
+                            allCategories[i].name,
+                            style: TextStyle(
+                              color: selectedCategoryId == allCategories[i].id
+                                  ? Colors.red
+                                  : Colors.blue,
+                            ),
+                          ),
                         ),
+                    ],
+                  ),
                 ),
-              ],
-            );
-          }),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Search",
+                      hintText: "Enter Task Name",
+                    ),
+                    onChanged: (value) {
+                      filteredTasks;
+                    },
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 9,
+                child: userTasks.isEmpty
+                    ? const Center(
+                        child: Text("No Tasks Found!"),
+                      )
+                    : ListView.builder(
+                        itemCount:
+                            filteredTasks.isNotEmpty || selectedCategoryId != 0
+                                ? filteredTasks.length
+                                : userTasks.length,
+                        itemBuilder: (context, index) {
+                          return taskCard(
+                              filteredTasks.isNotEmpty
+                                  ? filteredTasks[index]
+                                  : userTasks[index],
+                              "Home");
+                        },
+                      ),
+              ),
+            ],
+          );
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Task emptyTask = Task(
@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage> {
             }
           });
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       bottomNavigationBar: customBNB(),
     );

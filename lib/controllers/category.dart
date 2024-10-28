@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutterjul/DB/category.dart';
 import 'package:flutterjul/models/category.dart';
 import 'package:flutterjul/shared/category.dart';
+import 'package:flutterjul/shared/shared.dart';
 
-import 'package:flutterjul/shared/sahred.dart';
 
 void updateCategoryData(Category oldCategory, Category newCategory) {
   CategoryDatabase categoryDatabase = CategoryDatabase.instance;
@@ -18,6 +18,7 @@ void updateCategoryData(Category oldCategory, Category newCategory) {
 getCategories() async {
   CategoryDatabase categoryDatabase = CategoryDatabase.instance;
   await categoryDatabase.getAllCategories().then((onValue) {
+    // ignore: avoid_print
     print("onValue $onValue");
     categories = onValue;
   });

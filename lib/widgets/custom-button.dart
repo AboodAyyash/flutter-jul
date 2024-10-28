@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -12,7 +14,7 @@ class CustomButton extends StatelessWidget {
     required this.label,
     required this.bColor,
     required this.onTap,
-    this.fColor = Colors.white,
+    this.fColor = const Color(0xFFD3B187),
     this.fontSize = 16.0,
   });
 
@@ -23,7 +25,7 @@ class CustomButton extends StatelessWidget {
         backgroundColor: bColor,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(fColor == Colors.white ? 10 : 50),
+          borderRadius: BorderRadius.circular(fColor == const Color(0xFFD3B187) ? 10 : 50),
         ),
       ),
       onPressed: () {

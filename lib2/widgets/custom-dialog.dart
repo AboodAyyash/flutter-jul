@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterjul/shared/sahred.dart';
+import '../shared/sahred.dart';
 
 Future showCustomDialog({title, body, okButtonText, cancelButtonText}) async {
   return showDialog(

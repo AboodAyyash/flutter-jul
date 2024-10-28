@@ -6,6 +6,7 @@ import 'package:flutterjul/pages/signup.dart';
 
 import 'package:flutterjul/widgets/custom-button.dart';
 import 'package:flutterjul/widgets/custom-text-field.dart';
+// ignore: library_prefixes
 import 'package:flutterjul/controllers/user.dart' as userController;
 
 class LoginPage extends StatefulWidget {
@@ -24,7 +25,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Login Page"),
+          title: const Text("Login Page"),
+          titleTextStyle: const TextStyle(
+          fontFamily: 'Roboto',
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+         fontSize: 30.0,
+        ),
+        backgroundColor: const Color(0xFFD3B187),
           centerTitle: true,
         ),
         body: Center(
@@ -59,6 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                               if (myFormKey.currentState!.validate()) {
                                 String result = userController.checkLogin(
                                     emailCont.text, passwordCont.text);
+                                // ignore: avoid_print
                                 print(result);
                                 if (result == "Login Success") {
                                   Navigator.pushReplacement<void, void>(
@@ -70,6 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                                   );
                                 }
                               } else {
+                                // ignore: avoid_print
                                 print("not");
                               }
                             },

@@ -1,8 +1,9 @@
+// ignore_for_file: library_prefixes, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutterjul/controllers/user.dart' as userController;
 import 'package:flutterjul/models/user.dart';
-import 'package:flutterjul/pages/profile.dart';
-import 'package:flutterjul/shared/sahred.dart';
+import 'package:flutterjul/shared/shared.dart';
 import 'package:flutterjul/widgets/custom-button.dart';
 import 'package:flutterjul/widgets/custom-text-field.dart';
 
@@ -26,7 +27,7 @@ class _SignupPage extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Sign Up Page"),
+          title: const Text("Sign Up Page"),
           centerTitle: true,
         ),
         body: Center(

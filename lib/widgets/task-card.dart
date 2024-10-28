@@ -1,12 +1,14 @@
+// ignore_for_file: avoid_print, library_prefixes
+
 import 'package:flutter/material.dart';
 import 'package:flutterjul/models/task.dart';
 import 'package:flutterjul/pages/task.dart';
 import 'package:flutterjul/controllers/task.dart' as taskController;
 import 'package:flutterjul/services/services.dart';
-import 'package:flutterjul/shared/sahred.dart';
-import 'package:flutterjul/widgets/custom-dialog.dart';
+import 'package:flutterjul/shared/shared.dart';
+import 'package:flutterjul/widgets/custom-dailog.dart';
 
-Widget taskCard(Task task, fromWhere) {
+Widget taskCard(Task task, String fromWhere) {
   return InkWell(
     onTap: fromWhere == "Completed"
         ? null
@@ -19,8 +21,9 @@ Widget taskCard(Task task, fromWhere) {
                 ),
               ),
             ).then((newTask) {
-              print(newTask);
-              taskController.updateTaskData(task, newTask);
+              if (newTask != null) {
+                taskController.updateTask(task, newTask);
+              }
             });
           },
     child: Card(
@@ -40,9 +43,10 @@ Widget taskCard(Task task, fromWhere) {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 26, 25, 35)),
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                color: Color.fromARGB(255, 26, 25, 35),
+              ),
             ),
             const SizedBox(height: 8.0),
             Row(
@@ -52,7 +56,9 @@ Widget taskCard(Task task, fromWhere) {
                     "Created: ${formattedDate(task.createdDate)}",
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                        fontSize: 14.0, color: Color.fromARGB(255, 26, 25, 25)),
+                      fontSize: 14.0,
+                      color: Color.fromARGB(255, 26, 25, 35),
+                    ),
                   ),
                 ),
                 Expanded(
@@ -60,7 +66,9 @@ Widget taskCard(Task task, fromWhere) {
                     "Deadline: ${formattedDate(task.deadline)}",
                     textAlign: TextAlign.center,
                     style: const TextStyle(
-                        fontSize: 14.0, color: Color.fromARGB(255, 26, 25, 35)),
+                      fontSize: 14.0,
+                      color: Color.fromARGB(255, 26, 25, 35),
+                    ),
                   ),
                 ),
               ],
@@ -92,18 +100,17 @@ Widget taskCard(Task task, fromWhere) {
                       ? null
                       : () {
                           showCustomDialog(
-                                  body: "need to delete this task!",
-                                  title: "Delete Task",
-                                  cancelButtonText: 'No',
-                                  okButtonText: "Yes")
-                              .then((onValue) {
-                            print(onValue);
+                            body: "Are you sure that you want to delete this task!",
+                            title: "Delete Task",
+                            cancelButtonText: 'No',
+                            okButtonText: "Yes",
+                          ).then((onValue) {
                             if (onValue) {
                               taskController.deleteTask(task);
                             }
                           });
                         },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.delete,
                     color: Colors.red,
                   ),

@@ -1,7 +1,9 @@
+// ignore_for_file: prefer_const_declarations
+
 import 'package:flutterjul/models/user.dart';
-import 'package:flutterjul/shared/sahred.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:flutterjul/shared/shared.dart';
 
 class UserFields {
   static final List<String> values = [
@@ -31,7 +33,7 @@ class UserDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('tasks.db');
+    _database = await _initDB('users.db');
     return _database!;
   }
 
@@ -83,6 +85,7 @@ CREATE TABLE $tableUsers (
     final db = await instance.database;
 
     final results = await db.query(tableUsers);
+    // ignore: avoid_print
     print(results);
     return results.map((json) => UserModel.fromMap(json)).toList();
   }

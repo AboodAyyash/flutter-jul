@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutterjul/shared/task.dart';
 import 'package:flutterjul/widgets/custom-bnb.dart';
@@ -16,7 +18,14 @@ class _CompletedTasksPageState extends State<CompletedTasksPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Completed Tasks Page"),
+        title: const Text("Completed Tasks Page"),
+        titleTextStyle: const TextStyle(
+          fontFamily: 'Roboto',
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+         fontSize: 30.0,
+        ),
+        backgroundColor: const Color(0xFFD3B187),
       ),
       body: ListView.builder(
         itemCount: completedTasks.length,

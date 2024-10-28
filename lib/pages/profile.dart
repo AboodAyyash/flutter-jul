@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutterjul/controllers/user.dart';
-import 'package:flutterjul/shared/sahred.dart';
 import 'package:flutterjul/widgets/custom-bnb.dart';
 
 class ProfilePage extends StatelessWidget {
-  ProfilePage({
+  const ProfilePage({
     super.key,
   });
 
@@ -12,11 +10,24 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Profile Page",
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
+           style: TextStyle(
+           fontFamily: 'Roboto',
+           fontWeight: FontWeight.bold,
+           color: Colors.black,
+           fontSize: 30.0,
+          ),),
+        elevation: 100,
         centerTitle: true,
+        actions: const [
+          Padding(
+              padding: EdgeInsets.only(right: 50),
+              child: Icon(
+                Icons.account_circle,
+              )),
+        ],
+        backgroundColor: const Color(0xFFD3B187),
       ),
       body: Center(
         child: Container(
@@ -24,37 +35,10 @@ class ProfilePage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: ListView(
-              children: [
-                ListTile(
-                  title: Text("Name"),
-                  subtitle: Text(user.name),
-                ),
-                ListTile(
-                  title: Text("Email"),
-                  subtitle: Text(user.email),
-                ),
-                ListTile(
-                  title: Text("Password"),
-                  subtitle: Text(user.password),
-                ),
-                ListTile(
-                  title: Text("Age"),
-                  subtitle: Text(user.age),
-                ),
-                ListTile(
-                  title: Text("ID"),
-                  subtitle: Text(user.id.toString()),
-                ),
-              ],
+              children: const [],
             ),
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          logout();
-        },
-        child: Icon(Icons.logout),
       ),
       bottomNavigationBar: customBNB(),
     );

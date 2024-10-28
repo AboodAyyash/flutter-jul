@@ -1,11 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutterjul/DB/user.dart';
 import 'package:flutterjul/controllers/user.dart';
 import 'package:flutterjul/pages/home.dart';
 import 'package:flutterjul/pages/login.dart';
-import 'package:flutterjul/shared/sahred.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashPage extends StatefulWidget {
@@ -18,14 +18,13 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     start();
   }
 
   void start() async {
     await getAllUsersFromDB();
-    Timer(Duration(seconds: 1), () {
+    Timer(const Duration(seconds: 1), () {
       checkUser();
     });
   }
@@ -52,7 +51,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(),
       ),

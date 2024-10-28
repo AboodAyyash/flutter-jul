@@ -1,7 +1,9 @@
+// ignore_for_file: prefer_const_declarations, avoid_print
+
 import 'package:flutterjul/models/category.dart';
-import 'package:flutterjul/shared/sahred.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:flutterjul/shared/shared.dart';
 
 class CategoryFields {
   static final List<String> values = [
